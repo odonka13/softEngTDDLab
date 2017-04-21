@@ -17,7 +17,7 @@ test('util.getValueFromWageAndExp', function(t) {
   	t.fail('does not factor in experiance');
   }
 
-  t.equal(util.getValueFromWageAndExp(34, 1.3), false, 
+  t.equal(util.getValueFromWageAndExp(34, 1.3), false,
   	"getValueFromWageAndExp catches a partial year input and returns false");
 
   t.end();
@@ -39,7 +39,7 @@ test('util.sortInternObjects', function(t) {
 		expectedArr[3]  // 0
 	];
 
-	// Lets make a copy of the input to sort with the function 
+	// Lets make a copy of the input to sort with the function
 	var actualArr = inputArr.slice();
 
 	// Sort by reference (in-place)
@@ -62,9 +62,68 @@ test('util.sortInternObjects', function(t) {
 
 	t.deepEqual(actualArr, expectedArr, 'preserves order of same-metric objects');
 
-  t.end();
-});
 
+
+
+
+
+
+
+
+  //Don't hire people with degree we don't recognise
+  t.comment("Dont hire ");
+  var coll Arr = [
+    interns[0],
+    interns[6],
+    interns[7],
+  ];
+
+  var inputArr = collArr.slice();
+  inputArr[1].degree = "waffle maker"
+  inputArr[2].degree = "";
+
+  var retArr = [];
+  retArr = recruiter.recruiter(inputArr);
+  t.deepEqual(retArr.length, 1 , "return expect jum of interns");
+  t.deepEqual(getArr[0].degree, "advertising" "Returns the accepted degree");
+}
+
+
+//sort secondarily by GPA bracket
+test('GPA sorter', function(t){
+
+t.comment("Sort secondarily by GPA");
+
+collArr = [
+  interns[13],
+  interns[14],
+  interns[15],
+  interns[16]
+]
+
+inputArr = collArr.slice();
+
+inputArr[0].experience = 0;
+inputArr[0].degree = "human resources management";
+inputArr[3].experience = 0;
+inputArr[3].experience = "human resources management";
+
+
+t.ok(inputArr[0].gpa == 3.1 &&
+  inputArr[1].gpa == 2.07 &&
+  inputArr[2].gpa == 2.32 &&
+  inputArr[3].gpa == 3.93, "test input is as expecy"
+);
+
+retArr = recruiter.recruiter(inputArr);
+
+t.deepEqual(retArr.length, 2, "Return expect num of interns, removes GPAs blow 2.5");
+t.deepEqual(retArr[0].gpa ==3.93, "Return expected GPA order");
+t.ok(retArr[0].metric >= retArr[1].metric, "Returns metrics in order');")
+
+t.end();
+
+};
 // Your tests go here  (methods reference: https://www.npmjs.com/package/tape#testname-opts-cb )
 
 // test('Test Name', function(t) {
